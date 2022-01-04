@@ -1,0 +1,51 @@
+version: "3.2"
+services:
+  mongo:
+    build:
+      context: ./mongo
+    ports:
+     - "27017:27017/tcp"  
+    env_file:
+     - mongo/.env     
+    volumes:      
+      - ./mongo/storage:/data/db
+    networks:
+      internal: 
+
+  asterisk:
+    build:
+      context: ./asterisk
+    ports:
+     - "5060:5060/udp" 
+     - "10000-10020:10000-10020/udp"    
+    env_file:
+     - asterisk/.env     
+    networks:
+      internal:   
+
+  app:
+    build:
+      context: ./app
+    env_file:
+      - app/.env   
+    volumes:      
+      - ./app/app:/app
+    ports:
+      - "8000:8000/tcp"                        
+    networks:
+      internal:   
+
+  mongo-express:
+    build:
+      context: ./mongo-express
+    ports:
+     - "8081:8081/tcp"  
+    env_file:
+     - mongo-express/.env         
+    networks:
+      internal: 
+
+networks:
+  internal:
+    external: false
+
