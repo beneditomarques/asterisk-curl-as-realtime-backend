@@ -1,2 +1,3 @@
 mongo/storage/*
 !mongo/storage/.gitkeep
+app/app/__pycache__/
