@@ -9,31 +9,18 @@ services:
      - .env     
     volumes:      
       - ./mongo/storage:/data/db
-    networks:
-      internal: 
-
-  asterisk:
-    build:
-      context: ./asterisk
-    ports:
-     - "5060:5060/udp" 
-     - "10000-10020:10000-10020/udp"    
-    env_file:
-     - .env     
-    networks:
-      internal:   
+    network_mode: "host"    
 
   app:
     build:
       context: ./app
     env_file:
-      - .env  
+      - .env     
     volumes:      
       - ./app/app:/app
     ports:
       - "8000:8000/tcp"                        
-    networks:
-      internal:   
+    network_mode: "host"       
 
   mongo-express:
     build:
@@ -41,12 +28,9 @@ services:
     ports:
      - "8081:8081/tcp"  
     env_file:
-     - .env
+     - .env            
     restart: always
-    networks:
-      internal: 
+    network_mode: "host"    
 
-networks:
-  internal:
-    external: false
+
 
